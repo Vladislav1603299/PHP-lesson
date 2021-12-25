@@ -8,37 +8,30 @@
     <title>Gallery</title>
 </head>
 <body>
-    
-        <header class="header">
-            <h1 class="header_name">My Gallery</h1>
-        </header>
-        <main class="main">
-            <form class="main_block_loading" action="server.php" method="post" enctype="multipart/form-data">
-                <p style="color: red">ВЫБЕРЕТЕ ФАЙЛ ДЛЯ ЗАГРУЗКИ</p>
-                <div>
-                    <input class="input1" type="file" name="foto" accept="image/*">
-                    <input class="input2" type="submit" value="Загрузить">
-                </div>
-            </form>
-            <?php
-            $my_foto = scandir('img');
+    <header class="header">
+        <h1 class="header_name">My Gallery</h1>
+    </header>
+    <main class="main">
+        <form class="main_block_loading" action="server.php" method="post" enctype="multipart/form-data">
+            <p style="color: red">ВЫБЕРЕТЕ ФАЙЛ ДЛЯ ЗАГРУЗКИ</p>
+            <div>
+                <input class="input1" type="file" name="foto" accept="image/*">
+                <input class="input2" type="submit" value="Загрузить">
+            </div>
+        </form>
+    <?php
+        include_once "config.php";
+        $sql = "SELECT * FROM fotos ORDER BY count desc";
+        $res = mysqli_query($connect, $sql);
+        while($data = mysqli_fetch_assoc($res)){?>
+            <a href="fullfotos.php?id=<?= $data['id'];?>&img=<?= $data['name_foto'];?>"><img width="200px" height="100px" src="img/<?= $data['name_foto'];?>" alt="foto"></a>
+    <?php 
+        
+    }
+    ?>     
+    </main> 
+    <footer class="footer">
 
-            for ($i = 2; $i < count($my_foto); $i++) { ?>
-                    <a href="fullfotos.php?img=<?= $my_foto[
-                        $i
-                    ] ?>"><img width="200px" height="100px" src="img/<?= $my_foto[
-    $i
-] ?>" alt="foto"></a>
-                <?php }
-            ?>
-
-            
-            
-        </main> 
-    
-        <footer class="footer">
-
-        </footer> 
-     
+    </footer> 
 </body>
 </html>
