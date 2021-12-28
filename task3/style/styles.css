@@ -8,12 +8,15 @@ body {
   height: 75px;
   background-color: #25378f;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .header_name {
   margin: 0;
   color: white;
-  padding-top: 15px;
+  margin-left: 15px;
 }
 
 .main {
@@ -54,4 +57,18 @@ body {
   background-color: rgb(116, 40, 40);
   color: aliceblue;
   margin: 0;
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+}
+
+.user_feedback {
+  margin-left: 15px;
+}
+
+.feedback_form {
+  display: flex;
+  align-items: flex-end;
 }
