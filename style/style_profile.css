@@ -1,0 +1,35 @@
+.password {
+  position: relative;
+}
+
+.password-control {
+  position: absolute;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: url(../img/close_eye.png) 0 0 no-repeat;
+  background-position: center;
+  border: 1px solid black;
+  width: 35px;
+  height: 30px;
+}
+
+.password-control.view {
+  background: url(../img/open_eye.png) 0 0 no-repeat;
+  background-position: center;
+}
+
+.profile {
+  width: 33%;
+  margin: 0 auto;
+  margin-top: 80px;
+}
+
+.profile_text {
+  width: 500px;
+}
+
+.field {
+  margin-left: 40px;
+  width: 154px;
+}

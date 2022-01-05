@@ -1,0 +1,72 @@
+.products {
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.card {
+  border: 1px solid black;
+  width: 300px;
+  height: 350px;
+}
+
+.products_name {
+  text-align: center;
+}
+
+.card_img {
+  padding-top: 20px;
+
+  margin: 0 auto;
+}
+
+.card_name {
+  margin-top: 70px;
+  color: black;
+}
+
+.card_block {
+  text-decoration: none;
+}
+
+.card_block:hover {
+  box-shadow: 5px 20px 50px rgba(16, 158, 177, 0.2);
+}
+
+.card:hover {
+  border: 1px solid blue;
+}
+
+.input_number {
+  width: 50px;
+}
+
+.product_card {
+  display: flex;
+  justify-content: center;
+}
+
+.product_card_description {
+  width: 400px;
+  margin-top: 20px;
+}
+
+.product_card_price {
+  font-size: 30px;
+  color: brown;
+}
+
+.input_by {
+  margin: 0;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.product_card_text_price {
+  margin-left: 80px;
+}
+
+.bascet_goods {
+  border: 1px solid black;
+}
