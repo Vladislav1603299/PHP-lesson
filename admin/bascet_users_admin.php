@@ -1,9 +1,10 @@
 <?php
 $userId = (int) trim(strip_tags($_GET['userId']));
-include_once 'server/server_admin.php';
-include_once '../server_website/bd.php';
+include_once '../models/server_admin.php';
+include_once '../config/bd.php';
 $good = getGoods($connect);
 $goodBascetSum = sumGoodsBascet($connect);
+$getGoodsOrderUsers = seeOrderUsers($connect);
 ?>
 
 
@@ -13,64 +14,56 @@ $goodBascetSum = sumGoodsBascet($connect);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../style/style_top.css">
     <link rel="stylesheet" href="../style/style_products.css">
     <title>Bascet</title>
 </head>
 <body>
-<header class="header">
-<div class="header_top"></div>
-    <header class="header">
-        <div class="header_logo_links">
-            <a href="admin.php?userId=<?= $userId ?>"><img class="header_logo_top" src="../img/Rectangle.png" alt="logo"></a>
-            <div class="header_links">
-            <a style="text-decoration: none;" href="product_skates_admin.php?userId=<?= $userId ?>"><p style="margin: 0;" class="header_link">Electric Skateboards</p></a>
-            <a style="text-decoration: none;" href="product_scooters_admin.php?userId=<?= $userId ?>"><p style="text-decoration: none;" class="header_link">Electric Scooters</p></a>
-            <a style="text-decoration: none;" href="product_accessories_admin.php?userId=<?= $userId ?>"><p style="text-decoration: none;" class="header_link">Accessories</p></a>
-            <a style="text-decoration: none;" href="question_people_for_admin.php?userId=<?= $userId ?>"><p style="text-decoration: none;" class="header_link">Contact_questions</p></a>
-            <a style="text-decoration: none;" href="profile_admin.php?userId=<?= $userId ?>"><p style="text-decoration: none;" class="header_link">Profile</p></a>
-            <a style="text-decoration: none;" href="bascet_users_admin.php?userId=<?= $userId ?>"><p style="text-decoration: none;" class="header_link">Bascet_Users</p></a>
-            <a style="text-decoration: none;" href="users_admin.php?userId=<?= $userId ?>"><p style="text-decoration: none;" class="header_link">Users</p></a>
-            <a style="text-decoration: none;" href="../entrance.php"><p style="margin: 0; margin-left: 50px; margin-right:20px" class="header_link">Exit</p></a>
-        </div>
-    </header>
-    <hr>
+<?php include "../templates/menu_header_admin.php" ?>
     <main>
-        <h1 class="products_name">BASCET_USERS</h1>
-        <?php while ($datasum = mysqli_fetch_assoc($goodBascetSum)) { ?>
-        <div style="text-align: center; margin-top: 30px">
-            <h3><string>Общая стоимость товаров пользователей: </string><?= $datasum[
-                'sum_all'
-            ] ?> $</h3>
-        </div>
-        <?php } ?>
-        <div style="border: 1px solid red; width: 80%; margin:0 auto; min-height: 700px;">
-        <?php while ($data = mysqli_fetch_assoc($good)) { ?>
-            <div style="border: 1px solid black; width: 350px; 
-height: 200px; display:flex; justify-content:center; align-items:center; margin:0 auto; margin-top:20px">
-                <div><img width="150px" src="<?= $data[
-                    'image'
-                ] ?> " alt="foto"></div>
-                
-                <div style="margin-left: 20px; text-align:center">
-                    <strong>ID пользователя: <?= $data['user_id'] ?></strong>
-                    <strong style="margin: 0; "><?= $data[
-                        'name_product'
-                    ] ?></strong>
-                    <p style="margin: 0; margin-top:10px">quantity: <?= $data[
-                        'count'
-                    ] ?> things</p>
-                    <p style="margin: 0; margin-top:10px; color:red"><?= $data[
-                        'price'
-                    ] ?>$ for 1 piece</p>
-                </div>   
+        <h1 class="products_name">ORDERS_USERS</h1>
+        <?php while($data = mysqli_fetch_assoc($getGoodsOrderUsers)){
+            $id = $data['good_id'];
+            $name_product = $data['name_good'];
+            $clientId = $data['user_id'];
+            $sumGoodUser = sumGood($connect, $clientId, $id, $name_product);?>
+            <div>
+                <div style="border: 1px solid black; width: 450px; 
+    min-height: 300px; display:flex; justify-content:center; align-items:center; margin:0 auto; margin-top:20px">
+                    <div><img width="150px" src="<?= $data[
+                        'image_good'
+                    ] ?> " alt="foto"></div>
+                    
+                    <div style="margin-left: 20px; text-align:center">
+                        <strong style="margin: 0; font-size: 20px; text-decoration: underline;"><?= $data[
+                            'name_good'
+                        ] ?></strong>
+                        <p style="color: red; margin: 0"><strong style="color: black;">Price for 1 item: </strong><?= $data[
+                            'price_good'
+                        ] ?> $</p>
+                        <p style="color: red; margin: 0;"><strong style="color: black;">Quantity: </strong><?= $data[
+                            'count_good'
+                        ] ?> things</p>
+                        <?php while($sumGood = mysqli_fetch_assoc($sumGoodUser)){?>
+                            <p style="color: red;"><strong style="color: black;">The cost of everything: </strong> <?= $sumGood['sum_good'] ?> $</p>
+                        <?php
+                            }
+                        ?>
+                        <div style="margin-top: 10px; border: 1px solid black">
+                        <h5 style="text-decoration: underline;">Contact info</h5>
+                            <p style="color: red; font-size: 20px;"><strong style="color: black;">Id client: </strong><?= $data['user_id'] ?></p>
+                            <p><strong>Name client: </strong><?= $data['name'] ?></p>
+                            <p><strong>Surname client: </strong><?= $data['surname'] ?></p>
+                            <p><strong>Address client: </strong><?= $data['address'] ?></p>
+                            <p><strong>Email client: </strong><?= $data['email'] ?></p>
+                            <p><strong>Number client: </strong><?= $data['phone'] ?></p>
+                        </div>
+                    </div>   
+                </div>
             </div>
-            <?php } ?>
-        </div>
+        <?php
+            }
+        ?>
     </main>
-    
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -11,13 +11,13 @@
     <div style="display: flex; flex-direction:column; margin-top: 150px">
     <h3 style="text-align: center;">Registration</h3>
     <div style="border: 1px solid black; width:250px; height: 300px; text-align:center; margin: 0 auto; margin-top: 20px">
-        <form action="server_registration_entrance/core_server_r_e.php" method="post"  enctype="multipart/form-data">
+        <form action="../controllers/core_server_r_e.php" method="post"  enctype="multipart/form-data">
             <p>Your email</p>
             <input type="email" name="registr_mail" required>
             <p>Enter login</p>
             <input type="text" name="registr_login" required>
             <p>Enter password</p>
-            <input type="password" name="registr_password" required>
+            <input type="password" minlength="6" name="registr_password" required>
             <div style="text-align: center; margin-top: 20px; margin-bottom: 50px ;">
                 <input style="width: 100px" class="btn btn-primary" type="submit" name="registr_submit" value="Register">
             </div>

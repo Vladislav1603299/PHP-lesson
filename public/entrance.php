@@ -11,7 +11,7 @@
     <div style="display: flex; flex-direction:column; margin-top: 150px">
     <h3 style="text-align: center;">Entrance</h3>
     <div style="border: 1px solid black; width:250px; height: 250px; text-align:center; margin: 0 auto; margin-top: 20px">
-        <form action="server_registration_entrance/core_server_r_e.php" method="post"  enctype="multipart/form-data">
+        <form action="../controllers/core_server_r_e.php" method="post"  enctype="multipart/form-data">
             <p>Enter login</p>
             <input type="text" name="entrance_login" required>
             <p style="margin-top: 20px;">Enter password</p>

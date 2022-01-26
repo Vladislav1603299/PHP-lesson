@@ -70,6 +70,7 @@ body {
   background-repeat: no-repeat;
   width: 100%;
   background-size: 100%;
+  display: inline-block;
 }
 
 .header_footer {

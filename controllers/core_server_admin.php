@@ -1,6 +1,6 @@
 <?php
-include_once 'server_admin.php';
-include_once '../../server_website/bd.php';
+include_once '../models/server_admin.php';
+include_once '../config/bd.php';
 
 $name_people = trim(strip_tags($_POST['people_name']));
 $mail_people = trim(strip_tags($_POST['people_mail']));
@@ -24,7 +24,12 @@ $email_user = trim(strip_tags($_POST['mail']));
 $phone_number_user = trim(strip_tags($_POST['phone_number']));
 $address_user = trim(strip_tags($_POST['address']));
 $gender_user = trim(strip_tags($_POST['experience']));
-$password_user = trim(strip_tags($_POST['password']));
+$old_password_user = trim(strip_tags($_POST['oldPasswordAdmin']));
+$new_password_user = trim(strip_tags($_POST['newPasswordAdmin']));
+
+$saltPass = "jujmkutf422h8545gh";
+$old_password_user = $saltPass.md5($old_password_user).$saltPass;
+$new_password_user = $saltPass.md5($new_password_user).$saltPass;
 
 if ($_POST['submitSkate']) {
     editProductSkate(
@@ -39,7 +44,7 @@ if ($_POST['submitSkate']) {
         $count
     );
 
-    header("Location: ../edit_product_skate_card.php?userId=$userId&id=$id");
+    header("Location: ../admin/edit_product_skate_card.php?userId=$userId&id=$id");
 } elseif ($_POST['submitScooter']) {
     editProductScooter(
         $connect,
@@ -53,7 +58,7 @@ if ($_POST['submitSkate']) {
         $count
     );
 
-    header("Location: ../edit_product_scooter_card.php?userId=$userId&id=$id");
+    header("Location: ../admin/edit_product_scooter_card.php?userId=$userId&id=$id");
 } elseif ($_POST['submitAccessories']) {
     editProductAccessories(
         $connect,
@@ -68,7 +73,7 @@ if ($_POST['submitSkate']) {
     );
 
     header(
-        "Location: ../edit_product_accessories_card.php?userId=$userId&id=$id"
+        "Location: ../admin/edit_product_accessories_card.php?userId=$userId&id=$id"
     );
 } elseif ($_POST['addSkate']) {
     addProductSkate(
@@ -81,7 +86,7 @@ if ($_POST['submitSkate']) {
         $price,
         $count
     );
-    header("Location: ../product_skates_admin.php?userId=$userId");
+    header("Location: ../admin/product_skates_admin.php?userId=$userId");
 } elseif ($_POST['addScooter']) {
     addProductScooter(
         $connect,
@@ -93,7 +98,7 @@ if ($_POST['submitSkate']) {
         $price,
         $count
     );
-    header("Location: ../product_scooters_admin.php?userId=$userId");
+    header("Location: ../admin/product_scooters_admin.php?userId=$userId");
 } elseif ($_POST['addAccessories']) {
     addProductAccessories(
         $connect,
@@ -105,19 +110,19 @@ if ($_POST['submitSkate']) {
         $price,
         $count
     );
-    header("Location: ../product_accessories_admin.php?userId=$userId");
+    header("Location: ../admin/product_accessories_admin.php?userId=$userId");
 } elseif ($action == 'deleteSkate') {
     deleteProductSkate($connect, $id);
-    header("Location: ../product_skates_admin.php?userId=$userId");
+    header("Location: ../admin/product_skates_admin.php?userId=$userId");
 } elseif ($action == 'deleteScooter') {
     deleteProductScooter($connect, $id);
-    header("Location: ../product_scooters_admin.php?userId=$userId");
+    header("Location: ../admin/product_scooters_admin.php?userId=$userId");
 } elseif ($action == 'deleteAccessories') {
     deleteProductAccessories($connect, $id);
-    header("Location: ../product_accessories_admin.php?userId=$userId");
+    header("Location: ../admin/product_accessories_admin.php?userId=$userId");
 } elseif ($_POST['submitPeopleQuestion']) {
     sendQuestion($connect, $name_people, $mail_people, $question_people);
-    header("Location: ../../public/contact.php?userId=$userId");
+    header("Location: ../public/contact.php?userId=$userId");
 } elseif ($_POST['profile_save']) {
     editProfileAdmin(
         $connect,
@@ -129,9 +134,16 @@ if ($_POST['submitSkate']) {
         $email_user,
         $phone_number_user,
         $gender_user,
-        $address_user,
-        $password_user
+        $address_user
     );
-    header("Location: ../profile_admin.php?userId=$userId");
+    header("Location: ../admin/profile_admin.php?userId=$userId");
+} elseif ($_POST['profile_save_pass']) {
+    editProfilePassAdmin(
+        $connect,
+        $userId,
+        $old_password_user,
+        $new_password_user
+    );
+    header("Location: ../admin/profile_admin.php?userId=$userId");
 }
 ?>

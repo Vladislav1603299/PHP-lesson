@@ -1,8 +1,12 @@
-.password {
+.password1 {
   position: relative;
 }
 
-.password-control {
+.password2 {
+  position: relative;
+}
+
+.password-control1 {
   position: absolute;
   display: inline-block;
   width: 25px;
@@ -14,7 +18,24 @@
   height: 30px;
 }
 
-.password-control.view {
+.password-control1.view {
+  background: url(../img/open_eye.png) 0 0 no-repeat;
+  background-position: center;
+}
+
+.password-control2 {
+  position: absolute;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: url(../img/close_eye.png) 0 0 no-repeat;
+  background-position: center;
+  border: 1px solid black;
+  width: 35px;
+  height: 30px;
+}
+
+.password-control2.view {
   background: url(../img/open_eye.png) 0 0 no-repeat;
   background-position: center;
 }

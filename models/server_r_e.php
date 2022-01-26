@@ -8,7 +8,7 @@ function initialization($connect, $loginReg, $mailReg, $passwordReg)
 
     if (mysqli_num_rows($res) > 0 || mysqli_num_rows($reslogin) > 0) {
         echo 'Ваша учетная запись сущетвует. Войдите в нее.';
-        return header('Location: ../entrance.php');
+        return header('Location: ../public/entrance.php');
     } elseif (mysqli_num_rows($res) == 0) {
         $sqlEnt = "INSERT INTO `users`(`login`, `email`, `password`) VALUES ('$loginReg', '$mailReg', '$passwordReg')";
         mysqli_query($connect, $sqlEnt);
@@ -34,7 +34,7 @@ function entrance($connect, $loginReg, $passwordReg)
         }
     } elseif (mysqli_num_rows($res) == 0) {
         echo 'Ваша учетная запись не сущетвует. Зарегистрируйтесь.';
-        header('Location: ../registration.php');
+        header('Location: ../public/registration.php');
     }
 }
 

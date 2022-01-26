@@ -160,6 +160,7 @@ function addProfileAdmin($connect)
     return $res;
 }
 
+
 function editProfileAdmin(
     $connect,
     $userId,
@@ -170,14 +171,32 @@ function editProfileAdmin(
     $email_user,
     $phone_number_user,
     $gender_user,
-    $address_user,
-    $password_user
+    $address_user
 ) {
-    $sql = "UPDATE `users` SET `name_user`='$name_user', `surname`='$surname_user', `login`='$login_user', `birthday`='$birthday_user', `email`='$email_user', `phone_number`='$phone_number_user', `men_or_women`='$gender_user', `address`='$address_user',  `password`='$password_user' WHERE `id`='$userId'";
-
+    $sql = "UPDATE `users` SET `name_user`='$name_user', `surname`='$surname_user', `login`='$login_user', `birthday`='$birthday_user', `email`='$email_user', `phone_number`='$phone_number_user', `men_or_women`='$gender_user', `address`='$address_user' WHERE `id`='$userId'";
     $res = mysqli_query($connect, $sql);
-
+    
     return $res;
+}
+
+function editProfilePassAdmin(
+    $connect,
+    $userId,
+    $old_password_user,
+    $new_password_user
+) {
+    $sqlOldPass = "SELECT `password` FROM `users` WHERE `id`='$userId'";
+    $sqlNewPass = "UPDATE `users` SET `password`='$new_password_user' WHERE `id`='$userId'";
+    $resOldPass = mysqli_query($connect, $sqlOldPass);
+    
+    while($data = mysqli_fetch_assoc($resOldPass)){
+        $passOld = $data['password'];
+        if($passOld == $old_password_user){
+            mysqli_query($connect, $sqlNewPass);
+        } else {
+            echo "No";
+        }
+    }
 }
 
 function getGoods($connect)
@@ -198,6 +217,20 @@ function sumGoodsBascet($connect)
 function setUsersAdmin($connect)
 {
     $sql = 'SELECT * FROM `users`';
+    $res = mysqli_query($connect, $sql);
+    return $res;
+}
+
+function seeOrderUsers($connect){
+    $sql = "SELECT * FROM `order_users`";
+    $res = mysqli_query($connect, $sql);
+    return $res;
+}
+
+function sumGood($connect, $clientId, $id, $name_product)
+{
+
+    $sql = "SELECT SUM(`price_good` * `count_good`) as `sum_good` FROM `order_users` WHERE `user_id`='$clientId' AND `good_id`='$id' AND `name_good`='$name_product'";
     $res = mysqli_query($connect, $sql);
     return $res;
 }
